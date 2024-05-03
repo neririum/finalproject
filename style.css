@@ -6,3 +6,11 @@ html, body {
 canvas {
   display: block;
 }
+
+body {
+  size: 50px;
+}
+
+h1 {
+  text-align: center;
+}
