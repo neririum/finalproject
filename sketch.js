@@ -6,15 +6,18 @@
 // - describe what you did to take this project "above and beyond"
 
 let bg;
+let blocks = [];
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
+  let theBlocks = new FallingBlocks(windowWidth/7*2, 0);
+  blocks.push(theBlocks);
 }
 
 function draw() {
-  background(220);
-
   backGround();
+  blocks.move();
+  blocks.display();
 }
 
 function preload() {
@@ -38,6 +41,7 @@ class FallingBlocks {
     this.height = 20;
     this.x = x;
     this.y = y;
+    this.dy = 5;
     this.color = color("white");
   }
 
@@ -48,7 +52,7 @@ class FallingBlocks {
   }
 
   move() {
-    this.y += 12;
+    this.y += this.dy;
     
   }
 }
