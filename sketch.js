@@ -10,13 +10,14 @@ let blocks = [];
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  let theBlocks = new FallingBlocks(windowWidth/7*2, 0);
+  let theBlocks = new FallingBlocks(windowWidth/7*2, 100);
   blocks.push(theBlocks);
 }
 
 function draw() {
   backGround();
-  blocks.move();
+
+  blocks.update();
   blocks.display();
 }
 
@@ -51,8 +52,11 @@ class FallingBlocks {
     rect(this.x, this.y, this.width, this.height);
   }
 
+  update() {
+    this.move();
+  }
+
   move() {
     this.y += this.dy;
-    
   }
 }
