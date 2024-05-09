@@ -10,15 +10,17 @@ let blocks = [];
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  let theBlocks = new FallingBlocks(windowWidth/7*2, 100);
+  let theBlocks = new FallingBlocks((windowWidth/7*1)+5, 0);
   blocks.push(theBlocks);
 }
 
 function draw() {
   backGround();
 
-  blocks.update();
-  blocks.display();
+  for (let theBlock of blocks) {
+    theBlock.update();
+    theBlock.display();
+  }
 }
 
 function preload() {
@@ -38,8 +40,8 @@ function backGround() {
 class FallingBlocks {
   constructor(x, y) {
     this.speed = random(5);
-    this.width = windowWidth/7;
-    this.height = 20;
+    this.width = windowWidth/7-10;
+    this.height = 70;
     this.x = x;
     this.y = y;
     this.dy = 5;
@@ -59,4 +61,28 @@ class FallingBlocks {
   move() {
     this.y += this.dy;
   }
+}
+
+function keyPressed() {
+  if (key === 'a') {
+
+    console.log("pressed a");
+  }
+  else if (key === 's') {
+    console.log("pressed s");
+  }
+  else if (key === 'd') {
+    console.log("pressed d");
+  }
+  else if (key === 'f') {
+    console.log("pressed f");
+  }
+  else if (key === 'g') {
+    console.log("pressed g");
+  }
+}
+
+function onTheLine(x, y) {
+  //Is a rectangle on the line
+  let rectAreaDistance = dist(x, y, x, 70); //distance of length of blocks
 }
