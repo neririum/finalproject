@@ -11,7 +11,16 @@ let blocks = [];
 function setup() {
   createCanvas(windowWidth, windowHeight);
   let theBlocks = new FallingBlocks((windowWidth/7*1)+5, 0);
+  let blockTwo = new FallingBlocks((windowWidth/7*2)+5, 0);
+  let blockThree = new FallingBlocks((windowWidth/7*3)+5, 0);
+  let blockFour = new FallingBlocks((windowWidth/7*4)+5, 0);
+  let blockFive = new FallingBlocks((windowWidth/7*5)+5, 0);
   blocks.push(theBlocks);
+  blocks.push(blockTwo);
+  blocks.push(blockThree);
+  blocks.push(blockFour);
+  blocks.push(blockFive);
+
 }
 
 function draw() {
@@ -20,6 +29,22 @@ function draw() {
   for (let theBlock of blocks) {
     theBlock.update();
     theBlock.display();
+  }
+  for (let blockTwo of blocks) {
+    blockTwo.update();
+    blockTwo.display();
+  }
+  for (let blockThree of blocks) {
+    blockThree.update();
+    blockThree.display();
+  }
+  for (let blockFour of blocks) {
+    blockFour.update();
+    blockFour.display();
+  }
+  for (let blockFive of blocks) {
+    blockFive.update();
+    blockFive.display();
   }
 }
 
@@ -65,7 +90,11 @@ class FallingBlocks {
 
 function keyPressed() {
   if (key === 'a') {
-
+    // for (let i = blocks.length - 1; i >= 0; i--) {
+    //   if (onTheLine(windowWidth/7, windowHeight/5*4, blocks[i])){
+    //     blocks.splice(i,1);
+    //   }
+    // }
     console.log("pressed a");
   }
   else if (key === 's') {
@@ -82,7 +111,9 @@ function keyPressed() {
   }
 }
 
-function onTheLine(x, y) {
-  //Is a rectangle on the line
-  let rectAreaDistance = dist(x, y, x, 70); //distance of length of blocks
-}
+// function onTheLine(x, y, theLine) {
+//   //Is a rectangle on the line
+//   let rectAreaDistance = dist(x, y, x, 70); //distance of length of blocks
+//   let linePoint = theLine; 
+//   if (rectAreaDistance )
+// }

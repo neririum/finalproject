@@ -7,7 +7,7 @@ rhythm game with blocks falling down over a line
 - start screen
 - end screen
 - hit and miss rate
-- 4/5 blocks falling down
+- 4/ or 5 blocks falling down
 - music in background
 
 ## Nice to Have
