@@ -101,7 +101,7 @@ function draw() {
 }
 
 function preload() {
-  bg = loadImage("background.jpg");
+  bg = loadImage("cityScape.jpg");
 }
 
 function backGround() { //background of game
@@ -123,23 +123,32 @@ class FallingBlocks { //'Notes' falling over line
     this.y = y;
     this.dy = 5;
     this.color = color("white");
+    this.glow = color(72, 202, 228);
   }
 
   display() {
     noStroke();
     fill(this.color);
+    drawingContext.shadowBlur = 32; //should make the tiles glow
+    drawingContext.shadowColor(this.glow);
     rect(this.x, this.y, this.width, this.height);
   }
 
   update() {
     this.move();
+    this.spawn();
+    this.delete();
   }
 
   move() {
     this.y += this.dy;
   }
 
-  spawn() {
+  spawn() { //spawn tiles
+
+  }
+
+  delete() { //delte tiles after going out of screen
 
   }
 }
