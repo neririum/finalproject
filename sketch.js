@@ -5,14 +5,21 @@
 // Extra for Experts:
 // - describe what you did to take this project "above and beyond"
 
+//TURN THE TILE INTO A VALUE IF THAT VALUE IS EQUAL TO WHERE THE LINE IS THEN THE STATE ON LINE IS TRUE
+//RANDOMIZED WHERE TILES SPAWN
+//ADD MUSIC
+//START END SCREEN
+
+
 let bg;
 let blocks = [];
 let spawnBlocks;
-// let spawnBlocks5;
-// let spawnBlocks2;
-// let spawnBlocks3;
-// let spawnBlocks4;
+let spawnBlocks5;
+let spawnBlocks2;
+let spawnBlocks3;
+let spawnBlocks4;
 let lastSpawned = 0;
+let state = "overTile";
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -26,9 +33,10 @@ function draw() {
       let theBlocks = new FallingBlocks((windowWidth/7*column)+5, 0);
       blocks.push(theBlocks);
       lastSpawned = millis();
-      spawnBlocks = random(500, 2000); // put this into a class/function to randomized where it spawn
+      randomized(); // put this into a class/function to randomized where it spawn
     }
   }
+
   // spawnBlocks2 = random(500, 2000);
   // spawnBlocks3 = random(500, 2000);
   // spawnBlocks4 = random(500, 2000);
@@ -48,11 +56,11 @@ function draw() {
   //   blocks.push(blockFive);
   // }
 
-  if (millis() > lastSpawned + spawnBlocks) {
-    lastSpawned = millis();
-    let theBlocks = new FallingBlocks((windowWidth/7*1)+5, 0);
-    blocks.push(theBlocks);
-  }
+  // if (millis() > lastSpawned + spawnBlocks) {
+  //   lastSpawned = millis();
+  //   let theBlocks = new FallingBlocks((windowWidth/7*1)+5, 0);
+  //   blocks.push(theBlocks);
+  // }
 
   // if (millis() > lastSpawned + spawnBlocks2) {
   //   lastSpawned = millis();
@@ -82,22 +90,32 @@ function draw() {
     theBlock.update();
     theBlock.display();
   }
-  // for (let blockTwo of blocks) {
-  //   blockTwo.update();
-  //   blockTwo.display();
-  // }
-  // for (let blockThree of blocks) {
-  //   blockThree.update();
-  //   blockThree.display();
-  // }
-  // for (let blockFour of blocks) {
-  //   blockFour.update();
-  //   blockFour.display();
-  // }
-  // for (let blockFive of blocks) {
-  //   blockFive.update();
-  //   blockFive.display();
-  // }
+
+//   //DONT NEED THIS IMM PRETTY SURE
+//   for (let blockTwo of blocks) {
+//     blockTwo.update();
+//     blockTwo.display();
+//   }
+//   for (let blockThree of blocks) {
+//     blockThree.update();
+//     blockThree.display();
+//   }
+//   for (let blockFour of blocks) {
+//     blockFour.update();
+//     blockFour.display();
+//   }
+//   for (let blockFive of blocks) {
+//     blockFive.update();
+//     blockFive.display();
+//   }
+}            
+
+function randomized() {
+  spawnBlocks = random(500, 2000); 
+  spawnBlocks2 = random(500, 2000);
+  spawnBlocks3 = random(500, 2000);
+  spawnBlocks4 = random(500, 2000);
+  spawnBlocks5 = random(500, 2000);
 }
 
 function preload() {
@@ -123,37 +141,49 @@ class FallingBlocks { //'Notes' falling over line
     this.y = y;
     this.dy = 5;
     this.color = color("white");
-    this.glow = color(72, 202, 228);
+    this.glow = color("white");
   }
 
   display() {
     noStroke();
     fill(this.color);
-    drawingContext.shadowBlur = 32; //should make the tiles glow
-    drawingContext.shadowColor(this.glow);
+    //drawingContext.shadowBlur = 32; //should make the tiles glow
+    //drawingContext.shadowColor(this.glow);
     rect(this.x, this.y, this.width, this.height);
   }
 
   update() {
     this.move();
-    this.spawn();
+    // this.spawn();
     this.delete();
+    // this.randomized();
   }
 
-  move() {
+  move() { //move tiles downward
     this.y += this.dy;
   }
 
-  spawn() { //spawn tiles
+  // spawn() { //spawn tiles
+  //   if (millis() > lastSpawned + spawnBlocks) {
+  //     for (let column = 1; column <= 5; column++) {
+  //       let theBlocks = new FallingBlocks((windowWidth/7*column)+5, 0);
+  //       blocks.push(theBlocks);
+  //       lastSpawned = millis();
+  //       this.randomized(); 
+  //     }
+  //   }
+  // }
 
-  }
+  // randomized() {
+  //   spawnBlocks = random(500, 2000); 
+  // }
 
   delete() { //delte tiles after going out of screen
 
   }
 }
 
-function keyPressed() {
+function keyPressed() { //pressed keys to delete tile over line
   if (key === 'a') {
     // for (let i = blocks.length - 1; i >= 0; i--) {
     //   if (onTheLine(windowWidth/7, windowHeight/5*4, blocks[i])){
@@ -181,4 +211,4 @@ function keyPressed() {
 //   let rectAreaDistance = dist(x, y, x, 70); //distance of length of blocks
 //   let linePoint = theLine; 
 //   if (rectAreaDistance )
-// }
+//}
