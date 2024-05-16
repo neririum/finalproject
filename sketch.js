@@ -28,86 +28,69 @@ function setup() {
 
 function draw() {
   backGround();
+  // if (millis() > lastSpawned + spawnBlocks) {
+  //   for (let column = 1; column <= 5; column++) {
+  //     let theBlocks = new FallingBlocks((windowWidth/7*column)+5, 0);
+  //     blocks.push(theBlocks);
+  //     lastSpawned = millis();
+  //     randomized(); // put this into a class/function to randomized where it spawn
+  //   }
+  // }
+
+  spawnBlocks2 = random(500, 2000);
+  spawnBlocks3 = random(500, 2000);
+  spawnBlocks4 = random(500, 2000);
+  spawnBlocks5 = random(500, 2000);
+
+  // if (millis() > lastSpawned + spawnBlocks) {
+  //   lastSpawned = millis();
+  //   let theBlocks = new FallingBlocks((windowWidth/7*1)+5, 0);
+  //   let blockTwo = new FallingBlocks((windowWidth/7*2)+5, 0);
+  //   let blockThree = new FallingBlocks((windowWidth/7*3)+5, 0);
+  //   let blockFour = new FallingBlocks((windowWidth/7*4)+5, 0);
+  //   let blockFive = new FallingBlocks((windowWidth/7*5)+5, 0);
+  //   blocks.push(theBlocks);
+  //   blocks.push(blockTwo);
+  //   blocks.push(blockThree);
+  //   blocks.push(blockFour);
+  //   blocks.push(blockFive);
+  // }
+
   if (millis() > lastSpawned + spawnBlocks) {
-    for (let column = 1; column <= 5; column++) {
-      let theBlocks = new FallingBlocks((windowWidth/7*column)+5, 0);
-      blocks.push(theBlocks);
-      lastSpawned = millis();
-      randomized(); // put this into a class/function to randomized where it spawn
-    }
+    lastSpawned = millis();
+    let theBlocks = new FallingBlocks((windowWidth/7*1)+5, 0);
+    blocks.push(theBlocks);
   }
 
-  // spawnBlocks2 = random(500, 2000);
-  // spawnBlocks3 = random(500, 2000);
-  // spawnBlocks4 = random(500, 2000);
-  // spawnBlocks5 = random(500, 2000);
+  if (millis() > lastSpawned + spawnBlocks2) {
+    lastSpawned = millis();
+    let blockTwo = new FallingBlocks((windowWidth/7*2)+5, 0);
+    blocks.push(blockTwo);
+  }
 
-  // if (millis() > lastSpawned + spawnBlocks) {
-  //   lastSpawned = millis();
-  //   let theBlocks = new FallingBlocks((windowWidth/7*1)+5, 0);
-  //   let blockTwo = new FallingBlocks((windowWidth/7*2)+5, 0);
-  //   let blockThree = new FallingBlocks((windowWidth/7*3)+5, 0);
-  //   let blockFour = new FallingBlocks((windowWidth/7*4)+5, 0);
-  //   let blockFive = new FallingBlocks((windowWidth/7*5)+5, 0);
-  //   blocks.push(theBlocks);
-  //   blocks.push(blockTwo);
-  //   blocks.push(blockThree);
-  //   blocks.push(blockFour);
-  //   blocks.push(blockFive);
-  // }
+  if (millis() > lastSpawned + spawnBlocks3) {
+    lastSpawned = millis();
+    let blockThree = new FallingBlocks((windowWidth/7*3)+5, 0);
+    blocks.push(blockThree);
+  }
 
-  // if (millis() > lastSpawned + spawnBlocks) {
-  //   lastSpawned = millis();
-  //   let theBlocks = new FallingBlocks((windowWidth/7*1)+5, 0);
-  //   blocks.push(theBlocks);
-  // }
+  if (millis() > lastSpawned + spawnBlocks4) {
+    lastSpawned = millis();
+    let blockFour = new FallingBlocks((windowWidth/7*4)+5, 0);
+    blocks.push(blockFour);
+  }
 
-  // if (millis() > lastSpawned + spawnBlocks2) {
-  //   lastSpawned = millis();
-  //   let blockTwo = new FallingBlocks((windowWidth/7*2)+5, 0);
-  //   blocks.push(blockTwo);
-  // }
-
-  // if (millis() > lastSpawned + spawnBlocks3) {
-  //   lastSpawned = millis();
-  //   let blockThree = new FallingBlocks((windowWidth/7*3)+5, 0);
-  //   blocks.push(blockThree);
-  // }
-
-  // if (millis() > lastSpawned + spawnBlocks4) {
-  //   lastSpawned = millis();
-  //   let blockFour = new FallingBlocks((windowWidth/7*4)+5, 0);
-  //   blocks.push(blockFour);
-  // }
-
-  // if (millis() > lastSpawned + spawnBlocks5) {
-  //   lastSpawned = millis();
-  //   let blockFive = new FallingBlocks((windowWidth/7*5)+5, 0);
-  //   blocks.push(blockFive);
-  // }
+  if (millis() > lastSpawned + spawnBlocks5) {
+    lastSpawned = millis();
+    let blockFive = new FallingBlocks((windowWidth/7*5)+5, 0);
+    blocks.push(blockFive);
+  }
 
   for (let theBlock of blocks) {
     theBlock.update();
     theBlock.display();
   }
 
-//   //DONT NEED THIS IMM PRETTY SURE
-//   for (let blockTwo of blocks) {
-//     blockTwo.update();
-//     blockTwo.display();
-//   }
-//   for (let blockThree of blocks) {
-//     blockThree.update();
-//     blockThree.display();
-//   }
-//   for (let blockFour of blocks) {
-//     blockFour.update();
-//     blockFour.display();
-//   }
-//   for (let blockFive of blocks) {
-//     blockFive.update();
-//     blockFive.display();
-//   }
 }            
 
 function randomized() {
