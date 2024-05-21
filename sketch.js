@@ -9,6 +9,7 @@
 //RANDOMIZED WHERE TILES SPAWN
 //ADD MUSIC
 //START END SCREEN
+//while the tile is on the line (35 above or below line) console log it
 
 
 let bg;
@@ -20,6 +21,7 @@ let spawnBlocks3;
 let spawnBlocks4;
 let lastSpawned = 0;
 let state = "overTile";
+let screenState ="gameScreen";
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -86,11 +88,23 @@ function draw() {
     blocks.push(blockFive);
   }
 
-  for (let theBlock of blocks) {
-    theBlock.update();
-    theBlock.display();
+  // for (let theBlock of blocks) {
+  //   theBlock.update();
+  //   theBlock.display();
+  // }
+  
+  for (let theTiles of blocks) {
+    if(theTiles.outsideScreen()) {
+      let index = blocks.indexOf(theTiles);
+      blocks.splice(index, 1);
+    }
+    else {
+      theTiles.update();
+      theTiles.display();
+    }
   }
-  deleteTiles(blocks.x, blocks.y);
+
+  //tilesOnLine();
 }            
 
 function randomized() {
@@ -141,12 +155,20 @@ class FallingBlocks { //'Notes' falling over line
     this.move();
     // this.spawn();
     //this.delete();
-    //this.outsideScreen();
+    this.outsideScreen();
     // this.randomized();
   }
 
   move() { //move tiles downward
     this.y += this.dy;
+  }
+
+  outsideScreen() {
+    return this.y > windowHeight;
+  }
+
+  onLine() {
+    return this.y = windowHeight/5*4;
   }
 
   // delete(x, y) {
@@ -157,16 +179,6 @@ class FallingBlocks { //'Notes' falling over line
   //   }
   // }
 
-  // outsideScreen(x, y, someTiles) {
-  //   let outsideScreen = windowHeight + this.height;
-  //   let heightOfTile = this.dy;
-  //   if (outsideScreen < heightOfTile) {
-  //     return true;
-  //   }
-  //   else {
-  //     return false;
-  //   }
-  // }
 
   // spawn() { //spawn tiles
   //   if (millis() > lastSpawned + spawnBlocks) {
@@ -184,24 +196,18 @@ class FallingBlocks { //'Notes' falling over line
   // }
 
 }
-function deleteTiles(x, y) {
-  for (let i = blocks.length - 1; i >= 0; i--) {
-    if (this.outsideScreen(x, y, blocks[i])) {
-      blocks.splice(i, 1);
-    }
-  }
-}
 
-function outsideScreen(x, y, someTiles) {
-  let outsideScreen = windowHeight + this.height;
-  let heightOfTile = this.dy;
-  if (outsideScreen < heightOfTile) {
-    return true;
-  }
-  else {
-    return false;
-  }
-}
+// function tilesOnLine() {
+//   for (let theTile of blocks) {
+//     if(theTile.onLine()) {
+//       console.log("on the line");
+//     }
+//     else {
+//       console.log("not on line");
+//     }
+//   }
+// }
+
 
 function keyPressed() { //pressed keys to delete tile over line
   if (key === "a") {
