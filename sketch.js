@@ -29,7 +29,62 @@ function setup() {
 }
 
 function draw() {
-  backGround();
+
+  if (screenState === "startScreen") {
+    background('purple');
+  }
+  else if (screenState === "gameScreen") {
+    backGround();
+    spawnBlocks2 = random(500, 2000);
+    spawnBlocks3 = random(500, 2000);
+    spawnBlocks4 = random(500, 2000);
+    spawnBlocks5 = random(500, 2000);
+    if (millis() > lastSpawned + spawnBlocks) {
+      lastSpawned = millis();
+      let theBlocks = new FallingBlocks(windowWidth/7*1+5, 0);
+      blocks.push(theBlocks);
+    }
+  
+    if (millis() > lastSpawned + spawnBlocks2) {
+      lastSpawned = millis();
+      let blockTwo = new FallingBlocks(windowWidth/7*2+5, 0);
+      blocks.push(blockTwo);
+    }
+  
+    if (millis() > lastSpawned + spawnBlocks3) {
+      lastSpawned = millis();
+      let blockThree = new FallingBlocks(windowWidth/7*3+5, 0);
+      blocks.push(blockThree);
+    }
+  
+    if (millis() > lastSpawned + spawnBlocks4) {
+      lastSpawned = millis();
+      let blockFour = new FallingBlocks(windowWidth/7*4+5, 0);
+      blocks.push(blockFour);
+    }
+  
+    if (millis() > lastSpawned + spawnBlocks5) {
+      lastSpawned = millis();
+      let blockFive = new FallingBlocks(windowWidth/7*5+5, 0);
+      blocks.push(blockFive);
+    }
+    for (let theTiles of blocks) {
+      if(theTiles.outsideScreen()) {
+        let index = blocks.indexOf(theTiles);
+        blocks.splice(index, 1);
+      }
+      else {
+        theTiles.update();
+        theTiles.display();
+      }
+    }
+
+  }
+  else if (screenState === "endScreen") {
+    background('blue');
+  }
+
+  
   // if (millis() > lastSpawned + spawnBlocks) {
   //   for (let column = 1; column <= 5; column++) {
   //     let theBlocks = new FallingBlocks((windowWidth/7*column)+5, 0);
@@ -39,10 +94,7 @@ function draw() {
   //   }
   // }
 
-  spawnBlocks2 = random(500, 2000);
-  spawnBlocks3 = random(500, 2000);
-  spawnBlocks4 = random(500, 2000);
-  spawnBlocks5 = random(500, 2000);
+ 
 
   // if (millis() > lastSpawned + spawnBlocks) {
   //   lastSpawned = millis();
@@ -58,51 +110,11 @@ function draw() {
   //   blocks.push(blockFive);
   // }
 
-  if (millis() > lastSpawned + spawnBlocks) {
-    lastSpawned = millis();
-    let theBlocks = new FallingBlocks(windowWidth/7*1+5, 0);
-    blocks.push(theBlocks);
-  }
-
-  if (millis() > lastSpawned + spawnBlocks2) {
-    lastSpawned = millis();
-    let blockTwo = new FallingBlocks(windowWidth/7*2+5, 0);
-    blocks.push(blockTwo);
-  }
-
-  if (millis() > lastSpawned + spawnBlocks3) {
-    lastSpawned = millis();
-    let blockThree = new FallingBlocks(windowWidth/7*3+5, 0);
-    blocks.push(blockThree);
-  }
-
-  if (millis() > lastSpawned + spawnBlocks4) {
-    lastSpawned = millis();
-    let blockFour = new FallingBlocks(windowWidth/7*4+5, 0);
-    blocks.push(blockFour);
-  }
-
-  if (millis() > lastSpawned + spawnBlocks5) {
-    lastSpawned = millis();
-    let blockFive = new FallingBlocks(windowWidth/7*5+5, 0);
-    blocks.push(blockFive);
-  }
-
+  
   // for (let theBlock of blocks) {
   //   theBlock.update();
   //   theBlock.display();
   // }
-  
-  for (let theTiles of blocks) {
-    if(theTiles.outsideScreen()) {
-      let index = blocks.indexOf(theTiles);
-      blocks.splice(index, 1);
-    }
-    else {
-      theTiles.update();
-      theTiles.display();
-    }
-  }
 
   //tilesOnLine();
 }            
