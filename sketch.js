@@ -12,6 +12,8 @@
 //while the tile is on the line (35 above or below line) console log it
 
 let bg;
+let startBG;
+let endBG;
 let blocks = [];
 let spawnBlocks;
 let spawnBlocks5;
@@ -30,14 +32,14 @@ function setup() {
 function draw() {
 
   if (screenState === "startScreen") {
-    background("purple");
+    startBackGround();
   }
   else if (screenState === "gameScreen") {
     gameBackGround();
     spawnTiles();
   }
   else if (screenState === "endScreen") {
-    background("blue");
+    endBackGround();
   }
 
   
@@ -126,6 +128,8 @@ function randomized() {
 
 function preload() {
   bg = loadImage("cityScape.jpg");
+  startBG = loadImage("startScreen.png");
+  endBG = loadImage("endScreen.png");
 }
 
 function gameBackGround() { //background of game
@@ -136,6 +140,14 @@ function gameBackGround() { //background of game
   for (let n = 1; n < 7; n++) {
     line(windowWidth/7*n, 0, windowWidth/7*n, windowHeight);
   }
+}
+
+function startBackGround() {
+  image(startBG, 0, 0, windowWidth, windowHeight);
+}
+
+function endBackGround() {
+  image(endBG, 0, 0, windowWidth, windowHeight);
 }
 
 
@@ -149,14 +161,14 @@ class FallingBlocks { //'Notes' falling over line
     this.y = y;
     this.dy = 5;
     this.color = color("white");
-    this.glow = color("white");
+    this.glow = color("blue");
   }
 
   display() {
     noStroke();
     fill(this.color);
-    // drawingContext.shadowBlur = 32; //should make the tiles glow
-    // drawingContext.shadowColor(this.glow);
+    drawingContext.shadowBlur = 32; //should make the tiles glow
+    drawingContext.shadowColor= this.glow;
     rect(this.x, this.y, this.width, this.height);
     
     
