@@ -22,7 +22,7 @@ let spawnBlocks3;
 let spawnBlocks4;
 let lastSpawned = 0;
 let state = "overTile";
-let screenState ="startScreen";
+let screenState ="gameScreen";
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -149,6 +149,7 @@ function endBackGround() {
 }
 
 
+
 class FallingBlocks { //'Notes' falling over line
   constructor(x, y) {
     this.speed = random(5);
@@ -195,11 +196,12 @@ class FallingBlocks { //'Notes' falling over line
 
 function keyPressed() { //pressed keys to delete tile over line
   if (key === "a") {
-    // for (let i = blocks.length - 1; i >= 0; i--) {
-    //   if (onTheLine(windowWidth/7, windowHeight/5*4, blocks[i])){
-    //     blocks.splice(i,1);
-    //   }
-    // }
+    for (let theTiles of blocks) {
+      if(theTiles.onLine()) {
+        let index = blocks.indexOf(theTiles);
+        blocks.splice(index, 1);
+      }
+    }
     console.log("pressed a");
   }
   else if (key === "s") {
