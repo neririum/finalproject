@@ -22,7 +22,7 @@ let spawnBlocks3;
 let spawnBlocks4;
 let lastSpawned = 0;
 let state = "overTile";
-let screenState ="gameScreen";
+let screenState ="startScreen";
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -118,14 +118,6 @@ function spawnTiles() {
   }
 }
 
-function randomized() {
-  spawnBlocks = random(500, 2000); 
-  spawnBlocks2 = random(500, 2000);
-  spawnBlocks3 = random(500, 2000);
-  spawnBlocks4 = random(500, 2000);
-  spawnBlocks5 = random(500, 2000);
-}
-
 function preload() {
   bg = loadImage("cityScape.jpg");
   startBG = loadImage("startScreen.png");
@@ -144,12 +136,17 @@ function gameBackGround() { //background of game
 
 function startBackGround() {
   image(startBG, 0, 0, windowWidth, windowHeight);
+  textSize(50);
+  textAlign(CENTER, CENTER);
+  fill("white");
+  text("Rhythm Game", width/2, height/3);
+  text("Click Anywhere to START", width/2, height/2);
+  
 }
 
 function endBackGround() {
   image(endBG, 0, 0, windowWidth, windowHeight);
 }
-
 
 
 class FallingBlocks { //'Notes' falling over line
@@ -178,7 +175,6 @@ class FallingBlocks { //'Notes' falling over line
     this.move();
     this.outsideScreen();
     this.onLine();
-    // this.randomized();
   }
 
   move() { //move tiles downward
@@ -190,16 +186,10 @@ class FallingBlocks { //'Notes' falling over line
   }
 
   onLine() {
-    if (this.dy > windowHeight/5*4) {
+    if (this.y > windowHeight/5*4 && this.y > windowHeight/5*4+70) {
       console.log("over line");
     }
   }
-
-
-
-  // randomized() {
-  //   spawnBlocks = random(500, 2000); 
-  // }
 
 }
 
