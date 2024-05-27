@@ -21,12 +21,13 @@ let spawnBlocks2;
 let spawnBlocks3;
 let spawnBlocks4;
 let lastSpawned = 0;
-let state = "overTile";
-let screenState ="gameScreen";
+let missRate = 0;
+let hitRate = 0;
+let screenState ="startScreen";
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  spawnBlocks = random(500, 2000);
+  //spawnBlocks = random(500, 2000);
 }
 
 function draw() {
@@ -73,6 +74,7 @@ function draw() {
 } 
 
 function spawnTiles() {
+  spawnBlocks = random(500, 2000);
   spawnBlocks2 = random(500, 2000);
   spawnBlocks3 = random(500, 2000);
   spawnBlocks4 = random(500, 2000);
@@ -83,33 +85,34 @@ function spawnTiles() {
     blocks.push(theBlocks);
   }
   
-  if (millis() > lastSpawned + spawnBlocks2) {
-    lastSpawned = millis();
-    let blockTwo = new FallingBlocks(windowWidth/7*2+5, 0);
-    blocks.push(blockTwo);
-  }
+  // if (millis() > lastSpawned + spawnBlocks2) {
+  //   lastSpawned = millis();
+  //   let blockTwo = new FallingBlocks(windowWidth/7*2+5, 0);
+  //   blocks.push(blockTwo);
+  // }
   
-  if (millis() > lastSpawned + spawnBlocks3) {
-    lastSpawned = millis();
-    let blockThree = new FallingBlocks(windowWidth/7*3+5, 0);
-    blocks.push(blockThree);
-  }
+  // if (millis() > lastSpawned + spawnBlocks3) {
+  //   lastSpawned = millis();
+  //   let blockThree = new FallingBlocks(windowWidth/7*3+5, 0);
+  //   blocks.push(blockThree);
+  // }
   
-  if (millis() > lastSpawned + spawnBlocks4) {
-    lastSpawned = millis();
-    let blockFour = new FallingBlocks(windowWidth/7*4+5, 0);
-    blocks.push(blockFour);
-  }
+  // if (millis() > lastSpawned + spawnBlocks4) {
+  //   lastSpawned = millis();
+  //   let blockFour = new FallingBlocks(windowWidth/7*4+5, 0);
+  //   blocks.push(blockFour);
+  // }
   
-  if (millis() > lastSpawned + spawnBlocks5) {
-    lastSpawned = millis();
-    let blockFive = new FallingBlocks(windowWidth/7*5+5, 0);
-    blocks.push(blockFive);
-  }
+  // if (millis() > lastSpawned + spawnBlocks5) {
+  //   lastSpawned = millis();
+  //   let blockFive = new FallingBlocks(windowWidth/7*5+5, 0);
+  //   blocks.push(blockFive);
+  // }
   for (let theTiles of blocks) {
     if(theTiles.outsideScreen()) {
       let index = blocks.indexOf(theTiles);
       blocks.splice(index, 1);
+      missRate++;
     }
     else {
       theTiles.update();
@@ -147,7 +150,6 @@ function startBackGround() {
 function endBackGround() {
   image(endBG, 0, 0, windowWidth, windowHeight);
 }
-
 
 
 class FallingBlocks { //'Notes' falling over line
@@ -189,17 +191,30 @@ class FallingBlocks { //'Notes' falling over line
   onLine() {
     if (this.y > windowHeight/5*4 && this.y > windowHeight/5*4+70) {
       console.log("over line");
+      return true;
+    }
+    else {
+      return false;
     }
   }
 
 }
 
+function mouseClicked() {
+  if (screenState === "startScreen") {
+    screenState = "gameScreen";
+  }
+  else if (screenState === "endScreen") {
+    screenState = "startScreen";
+  }
+}
+
 function keyPressed() { //pressed keys to delete tile over line
   if (key === "a") {
-    for (let theTiles of blocks) {
-      if(theTiles.onLine()) {
-        let index = blocks.indexOf(theTiles);
-        blocks.splice(index, 1);
+    for (let i = blocks.length -1; i >= 0; i--) {
+      if (blocks[i].onLine()) {
+        let secondIndex = blocks[]
+        blocks.splice(i,1);
       }
     }
     console.log("pressed a");
@@ -217,3 +232,10 @@ function keyPressed() { //pressed keys to delete tile over line
     console.log("pressed g");
   }
 }
+
+for (let theTiles of blocks) {
+  if(theTiles.outsideScreen()) {
+    let index = blocks.indexOf(theTiles);
+    blocks.splice(index, 1);
+    missRate++;
+  }
