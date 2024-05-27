@@ -79,35 +79,36 @@ function spawnTiles() {
   spawnBlocks3 = random(500, 2000);
   spawnBlocks4 = random(500, 2000);
   spawnBlocks5 = random(500, 2000);
+
   if (millis() > lastSpawned + spawnBlocks) {
     lastSpawned = millis();
     let theBlocks = new FallingBlocks(windowWidth/7*1+5, 0);
     blocks.push(theBlocks);
   }
   
-  // if (millis() > lastSpawned + spawnBlocks2) {
-  //   lastSpawned = millis();
-  //   let blockTwo = new FallingBlocks(windowWidth/7*2+5, 0);
-  //   blocks.push(blockTwo);
-  // }
+  if (millis() > lastSpawned + spawnBlocks2) {
+    lastSpawned = millis();
+    let blockTwo = new FallingBlocks(windowWidth/7*2+5, 0);
+    blocks.push(blockTwo);
+  }
   
-  // if (millis() > lastSpawned + spawnBlocks3) {
-  //   lastSpawned = millis();
-  //   let blockThree = new FallingBlocks(windowWidth/7*3+5, 0);
-  //   blocks.push(blockThree);
-  // }
+  if (millis() > lastSpawned + spawnBlocks3) {
+    lastSpawned = millis();
+    let blockThree = new FallingBlocks(windowWidth/7*3+5, 0);
+    blocks.push(blockThree);
+  }
   
-  // if (millis() > lastSpawned + spawnBlocks4) {
-  //   lastSpawned = millis();
-  //   let blockFour = new FallingBlocks(windowWidth/7*4+5, 0);
-  //   blocks.push(blockFour);
-  // }
+  if (millis() > lastSpawned + spawnBlocks4) {
+    lastSpawned = millis();
+    let blockFour = new FallingBlocks(windowWidth/7*4+5, 0);
+    blocks.push(blockFour);
+  }
   
-  // if (millis() > lastSpawned + spawnBlocks5) {
-  //   lastSpawned = millis();
-  //   let blockFive = new FallingBlocks(windowWidth/7*5+5, 0);
-  //   blocks.push(blockFive);
-  // }
+  if (millis() > lastSpawned + spawnBlocks5) {
+    lastSpawned = millis();
+    let blockFive = new FallingBlocks(windowWidth/7*5+5, 0);
+    blocks.push(blockFive);
+  }
   for (let theTiles of blocks) {
     if(theTiles.outsideScreen()) {
       let index = blocks.indexOf(theTiles);
@@ -189,7 +190,7 @@ class FallingBlocks { //'Notes' falling over line
   }
 
   onLine() {
-    if (this.y > windowHeight/5*4 && this.y > windowHeight/5*4+70) {
+    if (this.y > windowHeight/5*4-69 && this.y < windowHeight/5*4+70) {
       console.log("over line");
       return true;
     }
@@ -213,8 +214,8 @@ function keyPressed() { //pressed keys to delete tile over line
   if (key === "a") {
     for (let i = blocks.length -1; i >= 0; i--) {
       if (blocks[i].onLine()) {
-        let secondIndex = blocks[]
         blocks.splice(i,1);
+        hitRate++;
       }
     }
     console.log("pressed a");
@@ -233,9 +234,5 @@ function keyPressed() { //pressed keys to delete tile over line
   }
 }
 
-for (let theTiles of blocks) {
-  if(theTiles.outsideScreen()) {
-    let index = blocks.indexOf(theTiles);
-    blocks.splice(index, 1);
-    missRate++;
-  }
+
+
