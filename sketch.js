@@ -5,9 +5,6 @@
 // Extra for Experts:
 // - describe what you did to take this project "above and beyond"
 
-//RANDOMIZED WHERE TILES SPAWN
-//ADD MUSIC
-
 let bg;
 let startBG;
 let endBG;
@@ -24,7 +21,7 @@ let screenState ="startScreen";
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  //spawnBlocks = random(500, 2000);
+
 }
 
 function draw() {
@@ -64,10 +61,6 @@ function draw() {
   //   blocks.push(blockFive);
   // }
   
-  // for (let theBlock of blocks) {
-  //   theBlock.update();
-  //   theBlock.display();
-  // }
 } 
 
 function spawnTiles() {
@@ -111,6 +104,7 @@ function spawnTiles() {
       let index = blocks.indexOf(theTiles);
       blocks.splice(index, 1);
       missRate++;
+      console.log("miss");
     }
     else {
       theTiles.update();
@@ -148,7 +142,6 @@ function startBackGround() {
 function endBackGround() {
   image(endBG, 0, 0, windowWidth, windowHeight);
 }
-
 
 class FallingBlocks { //'Notes' falling over line
   constructor(x, y) {
@@ -189,7 +182,7 @@ class FallingBlocks { //'Notes' falling over line
 
   onLine() {
     if (this.y > windowHeight/5*4 - this.height && this.y < windowHeight/5*4 + this.height) {
-      console.log("over line");
+      //console.log("over line");
       return true;
       
     }
