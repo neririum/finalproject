@@ -154,7 +154,7 @@ class FallingBlocks { //'Notes' falling over line
   constructor(x, y) {
     this.speed = random(5);
     this.width = windowWidth/7-10;
-    this.height = 70;
+    this.height = windowHeight/10;
     this.x = x;
     this.y = y;
     this.dy = 5;
@@ -176,6 +176,7 @@ class FallingBlocks { //'Notes' falling over line
     this.move();
     this.outsideScreen();
     this.onLine();
+    this.offLine();
   }
 
   move() { //move tiles downward
@@ -190,9 +191,17 @@ class FallingBlocks { //'Notes' falling over line
     if (this.y > windowHeight/5*4 - this.height && this.y < windowHeight/5*4 + this.height) {
       console.log("over line");
       return true;
+      
     }
     else {
       return false;
+    }
+  }
+
+  offLine() {
+    if (this.y > windowHeight/5*4 ) {
+      this.color = color(191, 219, 247);
+      this.glow = color(2, 43, 58);
     }
   }
 
