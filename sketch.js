@@ -5,11 +5,8 @@
 // Extra for Experts:
 // - describe what you did to take this project "above and beyond"
 
-//TURN THE TILE INTO A VALUE IF THAT VALUE IS EQUAL TO WHERE THE LINE IS THEN THE STATE ON LINE IS TRUE
 //RANDOMIZED WHERE TILES SPAWN
 //ADD MUSIC
-//START END SCREEN
-//while the tile is on the line (35 above or below line) console log it
 
 let bg;
 let startBG;
@@ -190,7 +187,7 @@ class FallingBlocks { //'Notes' falling over line
   }
 
   onLine() {
-    if (this.y > windowHeight/5*4-69 && this.y < windowHeight/5*4+70) {
+    if (this.y > windowHeight/5*4 - this.height && this.y < windowHeight/5*4 + this.height) {
       console.log("over line");
       return true;
     }
