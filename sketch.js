@@ -64,7 +64,7 @@ function draw() {
 } 
 
 function spawnTiles() {
-  spawnBlocks = random(500, 2000);
+  spawnBlocks = random(2000, 4000);
   spawnBlocks2 = random(500, 2000);
   spawnBlocks3 = random(500, 2000);
   spawnBlocks4 = random(500, 2000);
@@ -141,6 +141,12 @@ function startBackGround() {
 
 function endBackGround() {
   image(endBG, 0, 0, windowWidth, windowHeight);
+  let hitText = hitRate;
+  let missText = missRate;
+  textSize(30);
+  textAlign(CENTER, CENTER);
+  fill("white");
+  text("Hit Rate: " + hitText + "   Miss Rate: " + missText, width/2, height/2);
 }
 
 class FallingBlocks { //'Notes' falling over line
@@ -150,7 +156,7 @@ class FallingBlocks { //'Notes' falling over line
     this.height = windowHeight/10;
     this.x = x;
     this.y = y;
-    this.dy = 5;
+    this.dy = 2;
     this.color = color("white");
     this.glow = color("blue");
   }
@@ -182,9 +188,8 @@ class FallingBlocks { //'Notes' falling over line
 
   onLine() {
     if (this.y > windowHeight/5*4 - this.height && this.y < windowHeight/5*4 + this.height) {
-      //console.log("over line");
+
       return true;
-      
     }
     else {
       return false;
@@ -195,6 +200,11 @@ class FallingBlocks { //'Notes' falling over line
     if (this.y > windowHeight/5*4 ) {
       this.color = color(191, 219, 247);
       this.glow = color(2, 43, 58);
+      //console.log("off the line");
+      textSize(30);
+      textAlign(CENTER, CENTER);
+      fill("white");
+      text("off the line", width/2, height/2);
     }
   }
 
@@ -207,11 +217,14 @@ function mouseClicked() {
   else if (screenState === "endScreen") {
     screenState = "startScreen";
   }
+  else if (screenState === "gameScreen") {
+    screenState = "endScreen";
+  }
 }
 
 function keyPressed() { //pressed keys to delete tile over line
   if (key === "a") {
-    for (let i = blocks.length -1; i >= 0; i--) {
+    for (let i = blocks.length - 1; i >= 0; i--) {
       if (blocks[i].onLine()) {
         blocks.splice(i,1);
         hitRate++;
@@ -232,6 +245,7 @@ function keyPressed() { //pressed keys to delete tile over line
     console.log("pressed g");
   }
 }
+
 
 
 
