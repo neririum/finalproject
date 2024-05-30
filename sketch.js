@@ -76,29 +76,29 @@ function spawnTiles() {
     blocks.push(theBlocks);
   }
   
-  if (millis() > lastSpawned + spawnBlocks2) {
-    lastSpawned = millis();
-    let blockTwo = new FallingBlocks(windowWidth/7*2+5, 0);
-    blocks.push(blockTwo);
-  }
+  // if (millis() > lastSpawned + spawnBlocks2) {
+  //   lastSpawned = millis();
+  //   let blockTwo = new FallingBlocks(windowWidth/7*2+5, 0);
+  //   blocks.push(blockTwo);
+  // }
   
-  if (millis() > lastSpawned + spawnBlocks3) {
-    lastSpawned = millis();
-    let blockThree = new FallingBlocks(windowWidth/7*3+5, 0);
-    blocks.push(blockThree);
-  }
+  // if (millis() > lastSpawned + spawnBlocks3) {
+  //   lastSpawned = millis();
+  //   let blockThree = new FallingBlocks(windowWidth/7*3+5, 0);
+  //   blocks.push(blockThree);
+  // }
   
-  if (millis() > lastSpawned + spawnBlocks4) {
-    lastSpawned = millis();
-    let blockFour = new FallingBlocks(windowWidth/7*4+5, 0);
-    blocks.push(blockFour);
-  }
+  // if (millis() > lastSpawned + spawnBlocks4) {
+  //   lastSpawned = millis();
+  //   let blockFour = new FallingBlocks(windowWidth/7*4+5, 0);
+  //   blocks.push(blockFour);
+  // }
   
-  if (millis() > lastSpawned + spawnBlocks5) {
-    lastSpawned = millis();
-    let blockFive = new FallingBlocks(windowWidth/7*5+5, 0);
-    blocks.push(blockFive);
-  }
+  // if (millis() > lastSpawned + spawnBlocks5) {
+  //   lastSpawned = millis();
+  //   let blockFive = new FallingBlocks(windowWidth/7*5+5, 0);
+  //   blocks.push(blockFive);
+  // }
   for (let theTiles of blocks) {
     if(theTiles.outsideScreen()) {
       let index = blocks.indexOf(theTiles);
