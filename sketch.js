@@ -64,7 +64,7 @@ function draw() {
 } 
 
 function spawnTiles() {
-  spawnBlocks = random(2000, 4000);
+  spawnBlocks = random(500, 2000);
   spawnBlocks2 = random(500, 2000);
   spawnBlocks3 = random(500, 2000);
   spawnBlocks4 = random(500, 2000);
@@ -76,29 +76,29 @@ function spawnTiles() {
     blocks.push(theBlocks);
   }
   
-  // if (millis() > lastSpawned + spawnBlocks2) {
-  //   lastSpawned = millis();
-  //   let blockTwo = new FallingBlocks(windowWidth/7*2+5, 0);
-  //   blocks.push(blockTwo);
-  // }
+  if (millis() > lastSpawned + spawnBlocks2) {
+    lastSpawned = millis();
+    let blockTwo = new FallingBlocks(windowWidth/7*2+5, 0);
+    blocks.push(blockTwo);
+  }
   
-  // if (millis() > lastSpawned + spawnBlocks3) {
-  //   lastSpawned = millis();
-  //   let blockThree = new FallingBlocks(windowWidth/7*3+5, 0);
-  //   blocks.push(blockThree);
-  // }
+  if (millis() > lastSpawned + spawnBlocks3) {
+    lastSpawned = millis();
+    let blockThree = new FallingBlocks(windowWidth/7*3+5, 0);
+    blocks.push(blockThree);
+  }
   
-  // if (millis() > lastSpawned + spawnBlocks4) {
-  //   lastSpawned = millis();
-  //   let blockFour = new FallingBlocks(windowWidth/7*4+5, 0);
-  //   blocks.push(blockFour);
-  // }
+  if (millis() > lastSpawned + spawnBlocks4) {
+    lastSpawned = millis();
+    let blockFour = new FallingBlocks(windowWidth/7*4+5, 0);
+    blocks.push(blockFour);
+  }
   
-  // if (millis() > lastSpawned + spawnBlocks5) {
-  //   lastSpawned = millis();
-  //   let blockFive = new FallingBlocks(windowWidth/7*5+5, 0);
-  //   blocks.push(blockFive);
-  // }
+  if (millis() > lastSpawned + spawnBlocks5) {
+    lastSpawned = millis();
+    let blockFive = new FallingBlocks(windowWidth/7*5+5, 0);
+    blocks.push(blockFive);
+  }
   for (let theTiles of blocks) {
     if(theTiles.outsideScreen()) {
       let index = blocks.indexOf(theTiles);
@@ -156,7 +156,7 @@ class FallingBlocks { //'Notes' falling over line
     this.height = windowHeight/10;
     this.x = x;
     this.y = y;
-    this.dy = 2;
+    this.dy = 5;
     this.color = color("white");
     this.glow = color("blue");
   }
@@ -187,8 +187,7 @@ class FallingBlocks { //'Notes' falling over line
   }
 
   onLine() {
-    if (this.y > windowHeight/5*4 - this.height && this.y < windowHeight/5*4 + this.height) {
-
+    if (this.y > windowHeight/5*4 - this.height && this.y <= windowHeight/5*4) {
       return true;
     }
     else {
@@ -200,11 +199,11 @@ class FallingBlocks { //'Notes' falling over line
     if (this.y > windowHeight/5*4 ) {
       this.color = color(191, 219, 247);
       this.glow = color(2, 43, 58);
-      //console.log("off the line");
-      textSize(30);
-      textAlign(CENTER, CENTER);
-      fill("white");
-      text("off the line", width/2, height/2);
+      console.log("off the line");
+      // textSize(30);
+      // textAlign(CENTER, CENTER);
+      // fill("white");
+      // text("off the line", width/2, height/2);
     }
   }
 
@@ -230,18 +229,47 @@ function keyPressed() { //pressed keys to delete tile over line
         hitRate++;
       }
     }
+    textSize(50);
+    textAlign(CENTER, CENTER);
+    fill("white");
+    text("Excellent", width/2, height/2);
+  
     console.log("pressed a");
   }
   else if (key === "s") {
+    for (let i = blocks.length - 1; i >= 0; i--) {
+      if (blocks[i].onLine()) {
+        blocks.splice(i,1);
+        hitRate++;
+      }
+    }
     console.log("pressed s");
   }
   else if (key === "d") {
+    for (let i = blocks.length - 1; i >= 0; i--) {
+      if (blocks[i].onLine()) {
+        blocks.splice(i,1);
+        hitRate++;
+      }
+    }
     console.log("pressed d");
   }
   else if (key === "f") {
+    for (let i = blocks.length - 1; i >= 0; i--) {
+      if (blocks[i].onLine()) {
+        blocks.splice(i,1);
+        hitRate++;
+      }
+    }
     console.log("pressed f");
   }
   else if (key === "g") {
+    for (let i = blocks.length - 1; i >= 0; i--) {
+      if (blocks[i].onLine()) {
+        blocks.splice(i,1);
+        hitRate++;
+      }
+    }
     console.log("pressed g");
   }
 }
