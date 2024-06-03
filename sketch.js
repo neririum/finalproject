@@ -18,11 +18,13 @@ let lastSpawned = 0;
 let missRate = 0;
 let hitRate = 0;
 let screenState ="startScreen";
+let gameMusic;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-
+  
 }
+
 
 function draw() {
 
@@ -63,7 +65,13 @@ function draw() {
   
 } 
 
+// function music() {
+//   gameMusic.setVolume(0.6);
+//   gameMusic.play();
+// }
+
 function spawnTiles() {
+
   spawnBlocks = random(500, 2000);
   spawnBlocks2 = random(500, 2000);
   spawnBlocks3 = random(500, 2000);
@@ -117,6 +125,7 @@ function preload() {
   bg = loadImage("cityScape.jpg");
   startBG = loadImage("startScreen.png");
   endBG = loadImage("endScreen.png");
+  gameMusic = loadSound("Creepy-Nuts.mp3");
 }
 
 function gameBackGround() { //background of game
@@ -176,6 +185,7 @@ class FallingBlocks { //'Notes' falling over line
     this.outsideScreen();
     this.onLine();
     this.offLine();
+    this.theGameMusic();
   }
 
   move() { //move tiles downward
@@ -204,6 +214,12 @@ class FallingBlocks { //'Notes' falling over line
       // textAlign(CENTER, CENTER);
       // fill("white");
       // text("off the line", width/2, height/2);
+    }
+  }
+
+  theGameMusic() {
+    if (screenState === "gameScreen") {
+      gameMusic.play();
     }
   }
 
