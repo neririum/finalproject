@@ -34,6 +34,7 @@ function draw() {
   else if (screenState === "gameScreen") {
     gameBackGround();
     spawnTiles();
+    endGame();
   }
   else if (screenState === "endScreen") {
     endBackGround();
@@ -65,13 +66,7 @@ function draw() {
   
 } 
 
-// function music() {
-//   gameMusic.setVolume(0.6);
-//   gameMusic.play();
-// }
-
 function spawnTiles() {
-
   spawnBlocks = random(500, 2000);
   spawnBlocks2 = random(500, 2000);
   spawnBlocks3 = random(500, 2000);
@@ -112,7 +107,7 @@ function spawnTiles() {
       let index = blocks.indexOf(theTiles);
       blocks.splice(index, 1);
       missRate++;
-      console.log("miss");
+      //console.log("miss");
     }
     else {
       theTiles.update();
@@ -158,6 +153,13 @@ function endBackGround() {
   text("Hit Rate: " + hitText + "   Miss Rate: " + missText, width/2, height/2);
 }
 
+function endGame() {
+  if (millis() > 151200) {
+    screenState = "endScreen";
+    millis() =0;
+  }
+}
+
 class FallingBlocks { //'Notes' falling over line
   constructor(x, y) {
     this.speed = random(5);
@@ -185,7 +187,6 @@ class FallingBlocks { //'Notes' falling over line
     this.outsideScreen();
     this.onLine();
     this.offLine();
-    this.theGameMusic();
   }
 
   move() { //move tiles downward
@@ -209,25 +210,17 @@ class FallingBlocks { //'Notes' falling over line
     if (this.y > windowHeight/5*4 ) {
       this.color = color(191, 219, 247);
       this.glow = color(2, 43, 58);
-      console.log("off the line");
-      // textSize(30);
-      // textAlign(CENTER, CENTER);
-      // fill("white");
-      // text("off the line", width/2, height/2);
+      //console.log("off the line");
+  
     }
   }
-
-  theGameMusic() {
-    if (screenState === "gameScreen") {
-      gameMusic.play();
-    }
-  }
-
 }
 
 function mouseClicked() {
   if (screenState === "startScreen") {
     screenState = "gameScreen";
+    gameMusic.play();
+      
   }
   else if (screenState === "endScreen") {
     screenState = "startScreen";
