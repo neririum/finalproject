@@ -19,6 +19,8 @@ let missRate = 0;
 let hitRate = 0;
 let screenState ="startScreen";
 let gameMusic;
+let musicTimer = 3000;
+//151200;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -27,44 +29,24 @@ function setup() {
 
 
 function draw() {
+  resetGame();
+  
+} 
 
+function resetGame() {
   if (screenState === "startScreen") {
     startBackGround();
   }
   else if (screenState === "gameScreen") {
     gameBackGround();
     spawnTiles();
-    endGame();
+    //endGame();
   }
   else if (screenState === "endScreen") {
     endBackGround();
   }
-
   
-  // if (millis() > lastSpawned + spawnBlocks) {
-  //   for (let column = 1; column <= 5; column++) {
-  //     let theBlocks = new FallingBlocks((windowWidth/7*column)+5, 0);
-  //     blocks.push(theBlocks);
-  //     lastSpawned = millis();
-  //     randomized(); // put this into a class/function to randomized where it spawn
-  //   }
-  // }
-
-  // if (millis() > lastSpawned + spawnBlocks) {
-  //   lastSpawned = millis();
-  //   let theBlocks = new FallingBlocks((windowWidth/7*1)+5, 0);
-  //   let blockTwo = new FallingBlocks((windowWidth/7*2)+5, 0);
-  //   let blockThree = new FallingBlocks((windowWidth/7*3)+5, 0);
-  //   let blockFour = new FallingBlocks((windowWidth/7*4)+5, 0);
-  //   let blockFive = new FallingBlocks((windowWidth/7*5)+5, 0);
-  //   blocks.push(theBlocks);
-  //   blocks.push(blockTwo);
-  //   blocks.push(blockThree);
-  //   blocks.push(blockFour);
-  //   blocks.push(blockFive);
-  // }
-  
-} 
+}
 
 function spawnTiles() {
   spawnBlocks = random(500, 2000);
@@ -154,11 +136,13 @@ function endBackGround() {
 }
 
 function endGame() {
-  if (millis() > 151200) {
+  if (millis() > musicTimer) {
     screenState = "endScreen";
-    millis() =0;
+    musicTimer += millis();
   }
 }
+
+
 
 class FallingBlocks { //'Notes' falling over line
   constructor(x, y) {
@@ -210,7 +194,6 @@ class FallingBlocks { //'Notes' falling over line
     if (this.y > windowHeight/5*4 ) {
       this.color = color(191, 219, 247);
       this.glow = color(2, 43, 58);
-      //console.log("off the line");
   
     }
   }
@@ -224,6 +207,8 @@ function mouseClicked() {
   }
   else if (screenState === "endScreen") {
     screenState = "startScreen";
+    //screenState = "restartScreen";
+    //resetGame();
   }
   else if (screenState === "gameScreen") {
     screenState = "endScreen";
@@ -284,5 +269,28 @@ function keyPressed() { //pressed keys to delete tile over line
 }
 
 
+//FOR LATER
 
+// if (millis() > lastSpawned + spawnBlocks) {
+//   for (let column = 1; column <= 5; column++) {
+//     let theBlocks = new FallingBlocks((windowWidth/7*column)+5, 0);
+//     blocks.push(theBlocks);
+//     lastSpawned = millis();
+//     randomized(); // put this into a class/function to randomized where it spawn
+//   }
+// }
+
+// if (millis() > lastSpawned + spawnBlocks) {
+//   lastSpawned = millis();
+//   let theBlocks = new FallingBlocks((windowWidth/7*1)+5, 0);
+//   let blockTwo = new FallingBlocks((windowWidth/7*2)+5, 0);
+//   let blockThree = new FallingBlocks((windowWidth/7*3)+5, 0);
+//   let blockFour = new FallingBlocks((windowWidth/7*4)+5, 0);
+//   let blockFive = new FallingBlocks((windowWidth/7*5)+5, 0);
+//   blocks.push(theBlocks);
+//   blocks.push(blockTwo);
+//   blocks.push(blockThree);
+//   blocks.push(blockFour);
+//   blocks.push(blockFive);
+// }
 
