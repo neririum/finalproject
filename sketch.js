@@ -22,6 +22,7 @@ let gameMusic;
 let musicTimer = 3000;
 //151200;
 
+
 function setup() {
   createCanvas(windowWidth, windowHeight);
   
@@ -203,6 +204,8 @@ function mouseClicked() {
   if (screenState === "startScreen") {
     screenState = "gameScreen";
     gameMusic.play();
+    gameBackGround();
+    spawnTiles();
       
   }
   else if (screenState === "endScreen") {
@@ -212,6 +215,7 @@ function mouseClicked() {
   }
   else if (screenState === "gameScreen") {
     screenState = "endScreen";
+    gameMusic.stop();
   }
 }
 
