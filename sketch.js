@@ -109,8 +109,10 @@ function preload() {
 function gameBackGround() { //background of game
   image(bg, 0, 0, windowWidth, windowHeight);
   stroke("blue");
-  strokeWeight(10);
+  strokeWeight(windowWidth/130);
   line(windowWidth/7, windowHeight/5*4, windowWidth/7*6, windowHeight/5*4);
+  stroke("blue");
+  strokeWeight(windowWidth/130);
   for (let n = 1; n < 7; n++) {
     line(windowWidth/7*n, 0, windowWidth/7*n, windowHeight);
   }
@@ -144,11 +146,10 @@ function endGame() {
 }
 
 
-
 class FallingBlocks { //'Notes' falling over line
   constructor(x, y) {
     this.speed = random(5);
-    this.width = windowWidth/7-10;
+    this.width = windowWidth/7-windowWidth/130;
     this.height = windowHeight/10;
     this.x = x;
     this.y = y;
