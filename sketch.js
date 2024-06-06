@@ -30,11 +30,11 @@ function setup() {
 
 
 function draw() {
-  resetGame();
+  startGame();
   
 } 
 
-function resetGame() {
+function startGame() {
   if (screenState === "startScreen") {
     startBackGround();
   }
@@ -97,6 +97,7 @@ function spawnTiles() {
       theTiles.display();
     }
   }
+
 }
 
 function preload() {
@@ -138,13 +139,6 @@ function endBackGround() {
   text("Hit Rate: " + hitText + "   Miss Rate: " + missText, width/2, height/2);
 }
 
-function endGame() {
-  if (millis() > musicTimer) {
-    screenState = "endScreen";
-    musicTimer += millis();
-  }
-}
-
 
 class FallingBlocks { //'Notes' falling over line
   constructor(x, y) {
@@ -173,6 +167,7 @@ class FallingBlocks { //'Notes' falling over line
     this.outsideScreen();
     this.onLine();
     this.offLine();
+    this.onScreen();
   }
 
   move() { //move tiles downward
@@ -193,11 +188,37 @@ class FallingBlocks { //'Notes' falling over line
   }
 
   offLine() {
-    if (this.y > windowHeight/5*4 ) {
+    if (this.y > windowHeight/5*4 + windowWidth/130) {
       this.color = color(191, 219, 247);
       this.glow = color(2, 43, 58);
-  
+      // textSize(30);
+      // textAlign(CENTER, CENTER);
+      // fill("white");
+      // text("off line", width/2, height/2);
     }
+  }
+
+  onScreen() {
+    if (this.y > 0) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+}
+
+function resetGame() {
+  // if (millis() > musicTimer) {
+  //   screenState = "endScreen";
+  //   musicTimer += millis();
+  // }
+  for (let i = blocks.length - 1; i >= 0; i--) {
+    if(blocks[i].onScreen()) {
+      blocks.splice(i, 1);
+    }
+    missRate = 0;
+    hitRate = 0;
   }
 }
 
@@ -205,14 +226,13 @@ function mouseClicked() {
   if (screenState === "startScreen") {
     screenState = "gameScreen";
     gameMusic.play();
-    gameBackGround();
-    spawnTiles();
-      
+    resetGame();
   }
   else if (screenState === "endScreen") {
     screenState = "startScreen";
-    //screenState = "restartScreen";
-    //resetGame();
+    
+  
+  
   }
   else if (screenState === "gameScreen") {
     screenState = "endScreen";
@@ -228,11 +248,7 @@ function keyPressed() { //pressed keys to delete tile over line
         hitRate++;
       }
     }
-    textSize(50);
-    textAlign(CENTER, CENTER);
-    fill("white");
-    text("Excellent", width/2, height/2);
-  
+
     console.log("pressed a");
   }
   else if (key === "s") {
@@ -272,6 +288,7 @@ function keyPressed() { //pressed keys to delete tile over line
     console.log("pressed g");
   }
 }
+
 
 
 //FOR LATER
