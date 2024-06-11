@@ -8,6 +8,7 @@
 let bg;
 let startBG;
 let endBG;
+let questionMark;
 let blocks = [];
 let spawnBlocks;
 let spawnBlocks5;
@@ -23,16 +24,27 @@ let musicTimer = 3000;
 //151200;
 
 
+
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  
+  let button = createButton("?");
+  button.position(windowWidth/10*9.5, windowHeight/10);
+  button.mousePressed(howTo);
 }
+
 
 
 function draw() {
   startGame();
   
 } 
+
+function howTo(){
+  rectMode(CENTER);
+  rect(windowWidth/2, windowHeight/2, windowWidth/4, windowHeight/3);
+  fill("gray");
+  
+}
 
 function startGame() {
   if (screenState === "startScreen") {
@@ -126,8 +138,8 @@ function startBackGround() {
   fill("white");
   text("Rhythm Game", width/2, height/3);
   text("Click Anywhere to START", width/2, height/2);
-  
 }
+
 
 function endBackGround() {
   image(endBG, 0, 0, windowWidth, windowHeight);
@@ -230,9 +242,6 @@ function mouseClicked() {
   }
   else if (screenState === "endScreen") {
     screenState = "startScreen";
-    
-  
-  
   }
   else if (screenState === "gameScreen") {
     screenState = "endScreen";
