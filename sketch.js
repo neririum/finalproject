@@ -8,6 +8,7 @@
 let bg;
 let startBG;
 let endBG;
+let levelBG;
 let questionMark;
 let blocks = [];
 let spawnBlocks;
@@ -31,8 +32,6 @@ function setup() {
   button.position(windowWidth/10*9.5, windowHeight/10);
   button.mousePressed(howTo);
 }
-
-
 
 function draw() {
   startGame();
@@ -58,7 +57,8 @@ function startGame() {
   else if (screenState === "endScreen") {
     endBackGround();
   }
-  
+  else if (screenState === "levelScreen");
+    levelBackground();
 }
 
 function spawnTiles() {
@@ -116,6 +116,7 @@ function preload() {
   bg = loadImage("cityScape.jpg");
   startBG = loadImage("startScreen.png");
   endBG = loadImage("endScreen.png");
+  levelBG = loadImage("frame.png");
   gameMusic = loadSound("Creepy-Nuts.mp3");
 }
 
@@ -140,7 +141,6 @@ function startBackGround() {
   text("Click Anywhere to START", width/2, height/2);
 }
 
-
 function endBackGround() {
   image(endBG, 0, 0, windowWidth, windowHeight);
   let hitText = hitRate;
@@ -151,6 +151,23 @@ function endBackGround() {
   text("Hit Rate: " + hitText + "   Miss Rate: " + missText, width/2, height/2);
 }
 
+function levelBackground() {
+  image(levelBG, 0, 0, windowWidth, windowHeight);
+  rectMode(CENTER);
+  fill("white");
+  rect(windowWidth/4, windowHeight/2, windowWidth/5, windowHeight/4);
+  textSize(30);
+  textAlign(CENTER, CENTER);
+  fill("black");
+  text("NORMAL", windowWidth/4, windowHeight/2);
+  fill("gray");
+  rect(windowWidth/4*3, windowHeight/2, windowWidth/5, windowHeight/4);
+  textSize(30);
+  textAlign(CENTER, CENTER);
+  fill("black");
+  text("HARD", windowWidth/4*3, windowHeight/2);
+  
+}
 
 class FallingBlocks { //'Notes' falling over line
   constructor(x, y) {
@@ -170,7 +187,6 @@ class FallingBlocks { //'Notes' falling over line
     drawingContext.shadowBlur = 32; //should make the tiles glow
     drawingContext.shadowColor= this.glow;
     rect(this.x, this.y, this.width, this.height);
-    
     
   }
 
@@ -236,9 +252,16 @@ function resetGame() {
 
 function mouseClicked() {
   if (screenState === "startScreen") {
-    screenState = "gameScreen";
-    gameMusic.play();
-    resetGame();
+    screenState = "levelScreen";
+  }
+  if (screenState === "levelScreen") {
+    if(mouseX > windowWidth/4-windowWidth/10 && mouseX < windowWidth/4+windowWidth/10) {
+      if (mouseY > windowHeight/2-windowHeight/8 && mouseY < windowHeight/2+windowHeight/8) {
+        screenState = "gameScreen";
+        gameMusic.play();
+        resetGame();
+      }
+    }
   }
   else if (screenState === "endScreen") {
     screenState = "startScreen";
@@ -247,6 +270,7 @@ function mouseClicked() {
     screenState = "endScreen";
     gameMusic.stop();
   }
+  
 }
 
 function keyPressed() { //pressed keys to delete tile over line
