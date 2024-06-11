@@ -9,7 +9,7 @@ let bg;
 let startBG;
 let endBG;
 let levelBG;
-let questionMark;
+let infoScreen;
 let blocks = [];
 let spawnBlocks;
 let spawnBlocks5;
@@ -22,28 +22,29 @@ let hitRate = 0;
 let screenState ="startScreen";
 let gameMusic;
 let musicTimer = 3000;
+let myButton;
 //151200;
 
 
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  let button = createButton("?");
-  button.position(windowWidth/10*9.5, windowHeight/10);
-  button.mousePressed(howTo);
+  //   let button = createButton("?");
+  //   button.position(windowWidth/10*9.5, windowHeight/10);
+  //   button.mousePressed(howTo);
+
+  myButton = new Clickable();     //Create button
+  myButton.locate(20, 20);        //Position Button
+  myButton.onPress = function(){  //When myButton is pressed
+    this.color = "#AAAAFF";       //Change button color
+    alert("Yay!");                //Show an alert message
+  };
 }
 
 function draw() {
   startGame();
   
 } 
-
-function howTo(){
-  rectMode(CENTER);
-  rect(windowWidth/2, windowHeight/2, windowWidth/4, windowHeight/3);
-  fill("gray");
-  
-}
 
 function startGame() {
   if (screenState === "startScreen") {
@@ -52,13 +53,16 @@ function startGame() {
   else if (screenState === "gameScreen") {
     gameBackGround();
     spawnTiles();
-    //endGame();
+
   }
   else if (screenState === "endScreen") {
     endBackGround();
   }
-  else if (screenState === "levelScreen");
+  else if (screenState === "levelScreen"){
     levelBackground();
+    myButton.draw();
+  }
+  
 }
 
 function spawnTiles() {
@@ -116,7 +120,8 @@ function preload() {
   bg = loadImage("cityScape.jpg");
   startBG = loadImage("startScreen.png");
   endBG = loadImage("endScreen.png");
-  levelBG = loadImage("frame.png");
+  levelBG = loadImage("frame.jpg");
+  infoScreen = loadImage("info-screen.png");
   gameMusic = loadSound("Creepy-Nuts.mp3");
 }
 
@@ -186,6 +191,7 @@ class FallingBlocks { //'Notes' falling over line
     fill(this.color);
     drawingContext.shadowBlur = 32; //should make the tiles glow
     drawingContext.shadowColor= this.glow;
+    rectMode(CORNER);
     rect(this.x, this.y, this.width, this.height);
     
   }
