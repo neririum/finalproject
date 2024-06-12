@@ -10,6 +10,7 @@ let startBG;
 let endBG;
 let levelBG;
 let infoScreen;
+//let animatedBG;
 let blocks = [];
 let spawnBlocks;
 let spawnBlocks5;
@@ -25,8 +26,6 @@ let musicTimer = 3000;
 let myButton;
 //151200;
 
-
-
 function setup() {
   createCanvas(windowWidth, windowHeight);
   //   let button = createButton("?");
@@ -36,14 +35,18 @@ function setup() {
   myButton = new Clickable();     //Create button
   myButton.locate(20, 20);        //Position Button
   myButton.onPress = function(){  //When myButton is pressed
-    this.color = "#AAAAFF";       //Change button color
-    alert("Yay!");                //Show an alert message
+    imageMode(CENTER);
+    image(infoScreen, windowWidth/2, windowHeight/2, windowWidth/3, windowHeight/3);
+    // this.color = "#AAAAFF";       //Change button color
+    // alert("Yay!");                //Show an alert message
   };
+
+  //animatedBG.hide();
 }
 
 function draw() {
   startGame();
-  
+
 } 
 
 function startGame() {
@@ -123,6 +126,7 @@ function preload() {
   levelBG = loadImage("frame.jpg");
   infoScreen = loadImage("info-screen.png");
   gameMusic = loadSound("Creepy-Nuts.mp3");
+  //animatedBG = createVideo("screen-record.mp4");
 }
 
 function gameBackGround() { //background of game
@@ -145,6 +149,18 @@ function startBackGround() {
   text("Rhythm Game", width/2, height/3);
   text("Click Anywhere to START", width/2, height/2);
 }
+
+// function showAnimateBG() {
+//   if (screenState === "gameScreen") {
+    
+//     animatedBG.play();
+//     // animatedBG.loop();
+//     let img = animatedBG.get();
+//     image(img, 0, 0);
+//     animatedBG.size(width, height);
+//     animatedBG.showControls();
+//   }
+// }
 
 function endBackGround() {
   image(endBG, 0, 0, windowWidth, windowHeight);
