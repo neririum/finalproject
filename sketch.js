@@ -28,25 +28,13 @@ let myButton;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  //   let button = createButton("?");
-  //   button.position(windowWidth/10*9.5, windowHeight/10);
-  //   button.mousePressed(howTo);
-
-  myButton = new Clickable();     //Create button
-  myButton.locate(20, 20);        //Position Button
-  myButton.onPress = function(){  //When myButton is pressed
-    imageMode(CENTER);
-    image(infoScreen, windowWidth/2, windowHeight/2, windowWidth/3, windowHeight/3);
-    // this.color = "#AAAAFF";       //Change button color
-    // alert("Yay!");                //Show an alert message
-  };
 
   //animatedBG.hide();
 }
 
 function draw() {
   startGame();
-
+  
 } 
 
 function startGame() {
@@ -63,8 +51,8 @@ function startGame() {
   }
   else if (screenState === "levelScreen"){
     levelBackground();
-    myButton.draw();
-  }
+    
+  };
   
 }
 
@@ -124,9 +112,9 @@ function preload() {
   startBG = loadImage("startScreen.png");
   endBG = loadImage("endScreen.png");
   levelBG = loadImage("frame.jpg");
-  infoScreen = loadImage("info-screen.png");
   gameMusic = loadSound("Creepy-Nuts.mp3");
   //animatedBG = createVideo("screen-record.mp4");
+  infoScreen = loadImage("info-screen.png");
 }
 
 function gameBackGround() { //background of game
@@ -187,7 +175,25 @@ function levelBackground() {
   textAlign(CENTER, CENTER);
   fill("black");
   text("HARD", windowWidth/4*3, windowHeight/2);
+  let buttonWidth = windowWidth/20;
+  let buttonHeight = windowHeight/20;
+  myButton = new Clickable();     //Create button
+  myButton.locate(buttonWidth, buttonHeight);        //Position Button
+  myButton.onPress = function(){  //When myButton is pressed
+    infoPopUp();
+  }
+  myButton.draw();
   
+}
+
+function infoPopUp() {
+  imageMode(CENTER);
+  image(infoScreen, windowWidth/2, windowHeight/2, windowWidth/2, windowHeight/2);
+  textSize(30);
+  textAlign(CENTER, CENTER);
+  fill("black");
+  text("Press key 'a' 's' 'd' f' 'g' to delete the tiles!", windowWidth/2, windowHeight/2);
+  text("Press the keys when tiles are on the line!", windowWidth/2, windowHeight/2.5);
 }
 
 class FallingBlocks { //'Notes' falling over line
