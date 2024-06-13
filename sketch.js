@@ -97,7 +97,7 @@ function spawnTiles() {
       let index = blocks.indexOf(theTiles);
       blocks.splice(index, 1);
       missRate++;
-      //console.log("miss");
+      //This is what is causing the flickering 
     }
     else {
       theTiles.update();
@@ -119,6 +119,8 @@ function preload() {
 
 function gameBackGround() { //background of game
   image(bg, 0, 0, windowWidth, windowHeight);
+  drawingContext.shadowBlur = 15; //should make the tiles glow
+  drawingContext.shadowColor= color("black");
   stroke("blue");
   strokeWeight(windowWidth/130);
   line(windowWidth/7, windowHeight/5*4, windowWidth/7*6, windowHeight/5*4);
@@ -175,14 +177,25 @@ function levelBackground() {
   textAlign(CENTER, CENTER);
   fill("black");
   text("HARD", windowWidth/4*3, windowHeight/2);
+
+
+  //info button
   let buttonWidth = windowWidth/20;
   let buttonHeight = windowHeight/20;
   myButton = new Clickable();     //Create button
-  myButton.locate(buttonWidth, buttonHeight);        //Position Button
+  myButton.locate(buttonWidth, buttonHeight); //Position Button
+  myButton.resize(50, 50);
+  myButton.color = color("white");
+  myButton.text = "info";
+  myButton.textColor = color("black");
+  myButton.textSize = 10;
   myButton.onPress = function(){  //When myButton is pressed
     infoPopUp();
   }
   myButton.draw();
+  myButton.onHover = function(){
+    myButton.color = color("gray");
+  }
   
 }
 
