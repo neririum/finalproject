@@ -33,7 +33,12 @@ let hitRate = 0;
 let screenState ="startScreen";
 let musicTimer = 3000;
 let myButton;
+let popUpState = "false";
 //151200;
+
+//colour
+// let boxColour;
+// let textColour;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -226,21 +231,54 @@ function endBackGround() { //End Background
   text("Hit Rate: " + hitText + "   Miss Rate: " + missText, width/2, height/2);
 }
 
+// function mouseOver() {
+//   let boxColour;
+//   let textColour;
+//   if (mouseX < windowWidth/4-windowWidth/10 && mouseX > windowWidth/4+windowWidth/10) {
+//     if (mouseY < windowHeight/2-windowHeight/8 && mouseY > windowHeight/2+windowHeight/8)
+//       boxColour = color("black");
+//       textColour = color("blue");
+//   }
+//   else {
+//     boxColour = color("white");
+//     textColour = color("black");
+//   }
+// }
+
 function levelBackground() { // Level and info Background
+  
   image(levelBG, 0, 0, windowWidth, windowHeight);
   rectMode(CENTER);
-  fill("white");
+  if (mouseX < windowWidth/4-windowWidth/10 && mouseX > windowWidth/4+windowWidth/10) {
+    if (mouseY < windowHeight/2-windowHeight/8 && mouseY > windowHeight/2+windowHeight/8)
+      rectColour = color("black");
+  }
+  else {
+    rectColour = color("white");
+  }
+  fill(rectColour);
   rect(windowWidth/4, windowHeight/2, windowWidth/5, windowHeight/4);
+
+  if (mouseX < windowWidth/4-windowWidth/10 && mouseX > windowWidth/4+windowWidth/10) {
+    if (mouseY < windowHeight/2-windowHeight/8 && mouseY > windowHeight/2+windowHeight/8)
+      rectTextColor = color("blue");
+  }
+  else {
+    rectTextColor = color("black");
+  }
   textSize(30);
   textAlign(CENTER, CENTER);
-  fill("black");
+  fill(rectTextColor);
   text("NORMAL", windowWidth/4, windowHeight/2);
+
+  rectMode(CENTER);
   fill("gray");
   rect(windowWidth/4*3, windowHeight/2, windowWidth/5, windowHeight/4);
   textSize(30);
   textAlign(CENTER, CENTER);
   fill("black");
   text("HARD", windowWidth/4*3, windowHeight/2);
+  
 
 
   //info button
@@ -254,7 +292,12 @@ function levelBackground() { // Level and info Background
   myButton.textColor = color("black");
   myButton.textSize = 10;
   myButton.onPress = function(){  //When myButton is pressed
-    infoPopUp();
+    if (popUpState = "false") {
+      popUpState = "true";
+    }
+    else {
+      popUpState = "false";
+    }
   };
   myButton.draw();
   myButton.onHover = function(){
@@ -263,14 +306,18 @@ function levelBackground() { // Level and info Background
   
 }
 
+
+
 function infoPopUp() {  //How to play screen
-  // imageMode(CENTER);
-  image(infoScreen, windowWidth/2, windowHeight/2, windowWidth/2, windowHeight/2);
-  textSize(30);
-  textAlign(CENTER, CENTER);
-  fill("black");
-  text("Press key 'a' 's' 'd' f' 'g' to delete the tiles!", windowWidth/2, windowHeight/2);
-  text("Press the keys when tiles are on the line!", windowWidth/2, windowHeight/2.5);
+  if (popUpState = "true") {
+    image(infoScreen, windowWidth/2, windowHeight/2, windowWidth/2, windowHeight/2);
+    textSize(30);
+    textAlign(CENTER, CENTER);
+    fill("black");
+    text("Press key 'a' 's' 'd' f' 'g' to delete the tiles!", windowWidth/2, windowHeight/2);
+    text("Press the keys when tiles are on the line!", windowWidth/2, windowHeight/2.5);
+  }
+  
 }
 
 class FallingBlocks { //'Notes' falling over line
