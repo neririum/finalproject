@@ -12,6 +12,7 @@ let endBG;
 let levelBG;
 let infoScreen;
 let gameMusic;
+let button;
 //let animatedBG;
 
 //Spawn Blocks
@@ -47,6 +48,22 @@ let popUpState = "false";
 function setup() {
   createCanvas(windowWidth, windowHeight);
   //animatedBG.hide();
+
+  let buttonWidth = windowWidth/20;
+  let buttonHeight = windowHeight/20;
+  myButton = new Clickable();     //Create button
+  myButton.locate(buttonWidth, buttonHeight); //Position Button
+  myButton.text = "";
+  myButton.fitImage = true;
+  myButton.image = button;
+  myButton.onPress = function(){  //When myButton is pressed
+    if (popUpState === "false") {
+      popUpState = "true";
+    }
+    else {
+      popUpState = "false";
+    }
+  };
 }
 
 function draw() {
@@ -68,6 +85,7 @@ function startGame() { //Different Screens
   }
   else if (screenState === "levelScreen"){
     levelBackground();
+    infoPopUp();
   }
   
 }
@@ -189,6 +207,7 @@ function preload() { //preload stuff
   gameMusic = loadSound("Creepy-Nuts.mp3");
   //animatedBG = createVideo("screen-record.mp4");
   infoScreen = loadImage("info-screen.png");
+  button = loadImage("info-button.png");
 }
 
 function gameBackGround() { //game background
@@ -252,36 +271,21 @@ function levelBackground() { // Level and info Background
 
 
   //info button
-  let buttonWidth = windowWidth/20;
-  let buttonHeight = windowHeight/20;
-  myButton = new Clickable();     //Create button
-  myButton.locate(buttonWidth, buttonHeight); //Position Button
-  myButton.resize(50, 50);
-  myButton.color = color("white");
-  myButton.text = "info";
-  myButton.textColor = color("black");
-  myButton.textSize = 10;
-  myButton.onPress = function(){  //When myButton is pressed
-    if (popUpState = "false") {
-      popUpState = "true";
-    }
-    else {
-      popUpState = "false";
-    }
-  };
+  
   myButton.draw();
-  myButton.onHover = function(){
-    myButton.color = color("gray");
-  };
+  // myButton.onHover = function(){
+  //   myButton.color = color("gray");
+  // };
   
 }
 
 function infoPopUp() {  //How to play screen
-  if (popUpState = "true") {
-    image(infoScreen, windowWidth/2, windowHeight/2, windowWidth/2, windowHeight/2);
+  if (popUpState === "true") {
+    
+    image(infoScreen, windowWidth/4, windowHeight/4, windowWidth/2, windowHeight/2);
     textSize(30);
     textAlign(CENTER, CENTER);
-    fill("black");
+    fill(224, 118, 252);
     text("Press key 'a' 's' 'd' f' 'g' to delete the tiles!", windowWidth/2, windowHeight/2);
     text("Press the keys when tiles are on the line!", windowWidth/2, windowHeight/2.5);
   }
@@ -353,8 +357,7 @@ class FallingBlocks { //'Notes' falling over line
 }
 
 function endGame() {
-  let musicTimer = 3000;
-  //151200;
+  let musicTimer = 151200;
   if (millis() > gameStart + musicTimer) {
     gameStart = millis();
     screenState = "endScreen";
@@ -394,8 +397,10 @@ function resetGame() { // start new game
 function modeRectangle(){ //change colour when mouse hover over 'NORMAL' mode
   rectMode(CENTER);
   if (mouseX > windowWidth/4-windowWidth/10 && mouseX < windowWidth/4+windowWidth/10) {
-    if (mouseY > windowHeight/2-windowHeight/8 && mouseY < windowHeight/2+windowHeight/8)
+    if (mouseY > windowHeight/2-windowHeight/8 && mouseY < windowHeight/2+windowHeight/8){
       fill("black");
+    }
+      
   }
   else {
     fill("white");
@@ -403,8 +408,10 @@ function modeRectangle(){ //change colour when mouse hover over 'NORMAL' mode
   rect(windowWidth/4, windowHeight/2, windowWidth/5, windowHeight/4);
 
   if (mouseX > windowWidth/4-windowWidth/10 && mouseX < windowWidth/4+windowWidth/10) {
-    if (mouseY > windowHeight/2-windowHeight/8 && mouseY < windowHeight/2+windowHeight/8)
+    if (mouseY > windowHeight/2-windowHeight/8 && mouseY < windowHeight/2+windowHeight/8) {
       fill("blue");
+    }
+  
   }
   else {
     fill("black");
