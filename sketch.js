@@ -31,14 +31,18 @@ let lastSpawned = 0;
 let missRate = 0;
 let hitRate = 0;
 let screenState ="startScreen";
-let musicTimer = 3000;
+
+//Music
+let musicTimer;
+let gameStart = 0;
+
+//Clickable
 let myButton;
 let popUpState = "false";
+
+
 //151200;
 
-//colour
-// let boxColour;
-// let textColour;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -56,6 +60,7 @@ function startGame() { //Different Screens
   else if (screenState === "gameScreen") {
     gameBackGround();
     spawnTiles();
+    endGame();
 
   }
   else if (screenState === "endScreen") {
@@ -231,45 +236,10 @@ function endBackGround() { //End Background
   text("Hit Rate: " + hitText + "   Miss Rate: " + missText, width/2, height/2);
 }
 
-// function mouseOver() {
-//   let boxColour;
-//   let textColour;
-//   if (mouseX < windowWidth/4-windowWidth/10 && mouseX > windowWidth/4+windowWidth/10) {
-//     if (mouseY < windowHeight/2-windowHeight/8 && mouseY > windowHeight/2+windowHeight/8)
-//       boxColour = color("black");
-//       textColour = color("blue");
-//   }
-//   else {
-//     boxColour = color("white");
-//     textColour = color("black");
-//   }
-// }
-
 function levelBackground() { // Level and info Background
   
   image(levelBG, 0, 0, windowWidth, windowHeight);
-  rectMode(CENTER);
-  if (mouseX < windowWidth/4-windowWidth/10 && mouseX > windowWidth/4+windowWidth/10) {
-    if (mouseY < windowHeight/2-windowHeight/8 && mouseY > windowHeight/2+windowHeight/8)
-      rectColour = color("black");
-  }
-  else {
-    rectColour = color("white");
-  }
-  fill(rectColour);
-  rect(windowWidth/4, windowHeight/2, windowWidth/5, windowHeight/4);
-
-  if (mouseX < windowWidth/4-windowWidth/10 && mouseX > windowWidth/4+windowWidth/10) {
-    if (mouseY < windowHeight/2-windowHeight/8 && mouseY > windowHeight/2+windowHeight/8)
-      rectTextColor = color("blue");
-  }
-  else {
-    rectTextColor = color("black");
-  }
-  textSize(30);
-  textAlign(CENTER, CENTER);
-  fill(rectTextColor);
-  text("NORMAL", windowWidth/4, windowHeight/2);
+  modeRectangle();
 
   rectMode(CENTER);
   fill("gray");
@@ -305,8 +275,6 @@ function levelBackground() { // Level and info Background
   };
   
 }
-
-
 
 function infoPopUp() {  //How to play screen
   if (popUpState = "true") {
@@ -371,10 +339,6 @@ class FallingBlocks { //'Notes' falling over line
     if (this.y > windowHeight/5*4 + windowWidth/130) {
       this.color = color(191, 219, 247);
       this.glow = color(2, 43, 58);
-      // textSize(30);
-      // textAlign(CENTER, CENTER);
-      // fill("white");
-      // text("off line", width/2, height/2);
     }
   }
 
@@ -388,11 +352,16 @@ class FallingBlocks { //'Notes' falling over line
   }
 }
 
+function endGame() {
+  let musicTimer = 3000;
+  //151200;
+  if (millis() > gameStart + musicTimer) {
+    gameStart = millis();
+    screenState = "endScreen";
+  }
+}
+
 function resetGame() { // start new game
-  // if (millis() > musicTimer) {
-  //   screenState = "endScreen";
-  //   musicTimer += millis();
-  // }
   missRate = 0;
   hitRate = 0;
   for (let i = lineOne.length - 1; i >= 0; i--) {
@@ -420,6 +389,29 @@ function resetGame() { // start new game
       lineFive.splice(i, 1);
     }
   }
+}
+
+function modeRectangle(){ //change colour when mouse hover over 'NORMAL' mode
+  rectMode(CENTER);
+  if (mouseX > windowWidth/4-windowWidth/10 && mouseX < windowWidth/4+windowWidth/10) {
+    if (mouseY > windowHeight/2-windowHeight/8 && mouseY < windowHeight/2+windowHeight/8)
+      fill("black");
+  }
+  else {
+    fill("white");
+  }
+  rect(windowWidth/4, windowHeight/2, windowWidth/5, windowHeight/4);
+
+  if (mouseX > windowWidth/4-windowWidth/10 && mouseX < windowWidth/4+windowWidth/10) {
+    if (mouseY > windowHeight/2-windowHeight/8 && mouseY < windowHeight/2+windowHeight/8)
+      fill("blue");
+  }
+  else {
+    fill("black");
+  }
+  textSize(30);
+  textAlign(CENTER, CENTER);
+  text("NORMAL", windowWidth/4, windowHeight/2);
 }
 
 function mouseClicked() {
@@ -493,6 +485,7 @@ function keyPressed() { //pressed keys to delete tile over line
     console.log("pressed g");
   }
 }
+
 
 
 
