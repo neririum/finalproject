@@ -1,9 +1,6 @@
-// Project Title
-// Your Name
-// Date
-//
-// Extra for Experts:
-// - describe what you did to take this project "above and beyond"
+// Rhymth game
+// jessica
+
 
 //Medias
 let bg;
@@ -13,7 +10,6 @@ let levelBG;
 let infoScreen;
 let gameMusic;
 let button;
-//let animatedBG;
 
 //Spawn Blocks
 let lineOne = [];
@@ -40,21 +36,35 @@ let gameStart = 0;
 //Clickable
 let myButton;
 let popUpState = "false";
+let normalButton;
+let restartButton;
 
 
-//151200;
-
+function preload() { //preload stuff
+  bg = loadImage("cityScape.jpg");
+  startBG = loadImage("startScreen.png");
+  endBG = loadImage("endScreen.png");
+  levelBG = loadImage("frame.jpg");
+  gameMusic = loadSound("Creepy-Nuts.mp3");
+  //animatedBG = createVideo("screen-record.mp4");
+  infoScreen = loadImage("info-screen.png");
+  button = loadImage("info-button.png");
+}
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  //animatedBG.hide();
 
+
+  //button info
   let buttonWidth = windowWidth/20;
   let buttonHeight = windowHeight/20;
   myButton = new Clickable();     //Create button
+  myButton.cornerRadius = 360;
   myButton.locate(buttonWidth, buttonHeight); //Position Button
+  myButton.resize(50,50);
   myButton.text = "";
   myButton.fitImage = true;
+  myButton.imageScale = 1.1;
   myButton.image = button;
   myButton.onPress = function(){  //When myButton is pressed
     if (popUpState === "false") {
@@ -64,11 +74,61 @@ function setup() {
       popUpState = "false";
     }
   };
+
+  let normalLocate = windowWidth/4-windowWidth/10;
+  let normalLocate2 = windowHeight/2-windowHeight/8;
+  normalButton = new Clickable();
+  normalButton.cornerRadius = 10;
+  normalButton.textScaled = true;
+  normalButton.text = "Normal";
+  normalButton.locate(normalLocate, normalLocate2);
+  normalButton.resize(windowWidth/5, windowHeight/4);
+  normalButton.onOutside = function () {
+    this.color = "#FFFFFF";
+  }
+  normalButton.onHover = function () {
+    this.color = "#00A6FB";
+  }
+  normalButton.onPress = function () {
+    screenState === "gameScreen";
+    gameMusic.play();
+    resetGame();
+  }
+
+  let startLocate = windowWidth/2-windowWidth/10;
+  let startLocate2 = windowHeight/2+windowHeight/8;
+  restartButton = new Clickable();
+  restartButton.cornerRadius = 10;
+  restartButton.textScaled = true;
+  restartButton.text = "Restart";
+  restartButton.locate(startLocate, startLocate2);
+  restartButton.resize(windowWidth/5, windowHeight/4);
+  restartButton.onOutside = function () {
+    this.color = "#FFFFFF";
+  }
+  restartButton.onHover = function () {
+    this.color = "#00A6FB";
+  }
+  restartButton.onPress = function () {
+    screenState = "startScreen";
+    
+  }
 }
 
 function draw() {
   startGame();
+
 } 
+
+
+// function endGame() {
+//   let musicTimer = 151200;
+//   if (millis() > gameStart + musicTimer) {
+//     gameStart = millis();
+//     screenState = "endScreen";
+//   }
+// }
+
 
 function startGame() { //Different Screens
   if (screenState === "startScreen") {
@@ -77,8 +137,12 @@ function startGame() { //Different Screens
   else if (screenState === "gameScreen") {
     gameBackGround();
     spawnTiles();
-    endGame();
-
+    let musicTimer = 151200;
+    if (millis() > gameStart + musicTimer) {
+      gameStart = millis();
+      screenState = "endScreen";
+      console.log("here");
+      }
   }
   else if (screenState === "endScreen") {
     endBackGround();
@@ -88,6 +152,36 @@ function startGame() { //Different Screens
     infoPopUp();
   }
   
+}
+
+function resetGame() { // start new game
+  missRate = 0;
+  hitRate = 0;
+  for (let i = lineOne.length - 1; i >= 0; i--) {
+    if(lineOne[i].onScreen()) {
+      lineOne.splice(i, 1);
+    }
+  }
+  for (let i = lineTwo.length - 1; i >= 0; i--) {
+    if(lineTwo[i].onScreen()) {
+      lineTwo.splice(i, 1);
+    }
+  }
+  for (let i = lineThree.length - 1; i >= 0; i--) {
+    if(lineThree[i].onScreen()) {
+      lineThree.splice(i, 1);
+    }
+  }
+  for (let i = lineFour.length - 1; i >= 0; i--) {
+    if(lineFour[i].onScreen()) {
+      lineFour.splice(i, 1);
+    }
+  }
+  for (let i = lineFive.length - 1; i >= 0; i--) {
+    if(lineFive[i].onScreen()) {
+      lineFive.splice(i, 1);
+    }
+  }
 }
 
 function spawnTiles() {
@@ -198,21 +292,9 @@ function spawnTiles() {
   
 }
 
-
-function preload() { //preload stuff
-  bg = loadImage("cityScape.jpg");
-  startBG = loadImage("startScreen.png");
-  endBG = loadImage("endScreen.png");
-  levelBG = loadImage("frame.jpg");
-  gameMusic = loadSound("Creepy-Nuts.mp3");
-  //animatedBG = createVideo("screen-record.mp4");
-  infoScreen = loadImage("info-screen.png");
-  button = loadImage("info-button.png");
-}
-
 function gameBackGround() { //game background
   image(bg, 0, 0, windowWidth, windowHeight);
-  drawingContext.shadowBlur = 15; //should make the tiles glow
+  drawingContext.shadowBlur = 15; 
   drawingContext.shadowColor= color("black");
   stroke("blue");
   strokeWeight(windowWidth/130);
@@ -222,6 +304,16 @@ function gameBackGround() { //game background
   for (let n = 1; n < 7; n++) {
     line(windowWidth/7*n, 0, windowWidth/7*n, windowHeight);
   }
+  scoreBoard();
+}
+
+function scoreBoard() {
+  noStroke();
+  textSize(windowWidth/40);
+  textAlign(CENTER, CENTER);
+  fill("blue");
+  text("Hit: " + hitRate, width/11*10, height/8);
+  text("Miss: " + missRate, width/11*10, height/8+40);
 }
 
 function startBackGround() { //Start background
@@ -233,18 +325,6 @@ function startBackGround() { //Start background
   text("Click Anywhere to START", width/2, height/2);
 }
 
-// function showAnimateBG() {
-//   if (screenState === "gameScreen") {
-    
-//     animatedBG.play();
-//     // animatedBG.loop();
-//     let img = animatedBG.get();
-//     image(img, 0, 0);
-//     animatedBG.size(width, height);
-//     animatedBG.showControls();
-//   }
-// }
-
 function endBackGround() { //End Background
   image(endBG, 0, 0, windowWidth, windowHeight);
   let hitText = hitRate;
@@ -253,12 +333,12 @@ function endBackGround() { //End Background
   textAlign(CENTER, CENTER);
   fill("white");
   text("Hit Rate: " + hitText + "   Miss Rate: " + missText, width/2, height/2);
+  gameMusic.stop();
+  restartButton.draw();
 }
 
 function levelBackground() { // Level and info Background
-  
   image(levelBG, 0, 0, windowWidth, windowHeight);
-  modeRectangle();
 
   rectMode(CENTER);
   fill("gray");
@@ -268,14 +348,13 @@ function levelBackground() { // Level and info Background
   fill("black");
   text("HARD", windowWidth/4*3, windowHeight/2);
   
-
+  //make the button fits ?????
+  rectMode(CORNER);
 
   //info button
-  
   myButton.draw();
-  // myButton.onHover = function(){
-  //   myButton.color = color("gray");
-  // };
+  normalButton.draw();
+  
   
 }
 
@@ -356,90 +435,15 @@ class FallingBlocks { //'Notes' falling over line
   }
 }
 
-function endGame() {
-  let musicTimer = 151200;
-  if (millis() > gameStart + musicTimer) {
-    gameStart = millis();
-    screenState = "endScreen";
-  }
-}
-
-function resetGame() { // start new game
-  missRate = 0;
-  hitRate = 0;
-  for (let i = lineOne.length - 1; i >= 0; i--) {
-    if(lineOne[i].onScreen()) {
-      lineOne.splice(i, 1);
-    }
-  }
-  for (let i = lineTwo.length - 1; i >= 0; i--) {
-    if(lineTwo[i].onScreen()) {
-      lineTwo.splice(i, 1);
-    }
-  }
-  for (let i = lineThree.length - 1; i >= 0; i--) {
-    if(lineThree[i].onScreen()) {
-      lineThree.splice(i, 1);
-    }
-  }
-  for (let i = lineFour.length - 1; i >= 0; i--) {
-    if(lineFour[i].onScreen()) {
-      lineFour.splice(i, 1);
-    }
-  }
-  for (let i = lineFive.length - 1; i >= 0; i--) {
-    if(lineFive[i].onScreen()) {
-      lineFive.splice(i, 1);
-    }
-  }
-}
-
-function modeRectangle(){ //change colour when mouse hover over 'NORMAL' mode
-  rectMode(CENTER);
-  if (mouseX > windowWidth/4-windowWidth/10 && mouseX < windowWidth/4+windowWidth/10) {
-    if (mouseY > windowHeight/2-windowHeight/8 && mouseY < windowHeight/2+windowHeight/8){
-      fill("black");
-    }
-      
-  }
-  else {
-    fill("white");
-  }
-  rect(windowWidth/4, windowHeight/2, windowWidth/5, windowHeight/4);
-
-  if (mouseX > windowWidth/4-windowWidth/10 && mouseX < windowWidth/4+windowWidth/10) {
-    if (mouseY > windowHeight/2-windowHeight/8 && mouseY < windowHeight/2+windowHeight/8) {
-      fill("blue");
-    }
-  
-  }
-  else {
-    fill("black");
-  }
-  textSize(30);
-  textAlign(CENTER, CENTER);
-  text("NORMAL", windowWidth/4, windowHeight/2);
-}
 
 function mouseClicked() {
   if (screenState === "startScreen") {
     screenState = "levelScreen";
   }
-  if (screenState === "levelScreen") {
-    if(mouseX > windowWidth/4-windowWidth/10 && mouseX < windowWidth/4+windowWidth/10) {
-      if (mouseY > windowHeight/2-windowHeight/8 && mouseY < windowHeight/2+windowHeight/8) {
-        screenState = "gameScreen";
-        gameMusic.play();
-        resetGame();
-      }
-    }
-  }
-  else if (screenState === "endScreen") {
-    screenState = "startScreen";
-  }
+  
   else if (screenState === "gameScreen") {
     screenState = "endScreen";
-    gameMusic.stop();
+    
   }
   
 }
