@@ -85,15 +85,15 @@ function setup() {
   normalButton.resize(windowWidth/5, windowHeight/4);
   normalButton.onOutside = function () {
     this.color = "#FFFFFF";
-  }
+  };
   normalButton.onHover = function () {
     this.color = "#00A6FB";
-  }
+  };
   normalButton.onPress = function () {
     screenState === "gameScreen";
     gameMusic.play();
     resetGame();
-  }
+  };
 
   let startLocate = windowWidth/2-windowWidth/10;
   let startLocate2 = windowHeight/2+windowHeight/8;
@@ -105,14 +105,14 @@ function setup() {
   restartButton.resize(windowWidth/5, windowHeight/4);
   restartButton.onOutside = function () {
     this.color = "#FFFFFF";
-  }
+  };
   restartButton.onHover = function () {
     this.color = "#00A6FB";
-  }
+  };
   restartButton.onPress = function () {
     screenState = "startScreen";
     
-  }
+  };
 }
 
 function draw() {
@@ -142,7 +142,7 @@ function startGame() { //Different Screens
       gameStart = millis();
       screenState = "endScreen";
       console.log("here");
-      }
+    }
   }
   else if (screenState === "endScreen") {
     endBackGround();
